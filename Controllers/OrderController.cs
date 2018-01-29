@@ -42,19 +42,23 @@ namespace B_Api.Controllers
 
             try
             {
-                Order order = _context.Order
-                    .Include(o => o.OrderProducts)
-                        .ThenInclude(op => op.Product)
-                    .Single(g => g.OrderId == id);
+                OrderWithProducts order = _context.Order
+                    .Where(o => o.OrderId == id)
+                    .Select(o => new OrderWithProducts()
+                        {
+                            OrderId = o.OrderId,
+                            CustomerId = o.CustomerId,
+                            Products = o.OrderProducts.Select(op => op.Product).ToList(),
+                            PaymentTypeId = o.PaymentTypeId
+                        })
+                    .Single();
 
                 if (order == null)
                 {
                     return NotFound();
                 }
-                OrderWithProducts orderWproducts = new OrderWithProducts(order);
-                orderWproducts.Products = order.OrderProducts.Select(op => op.Product).ToList();
 
-                return Ok(orderWproducts);
+                return Ok(order);
             }
             catch (System.InvalidOperationException ex)
             {

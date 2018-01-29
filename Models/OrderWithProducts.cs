@@ -2,16 +2,12 @@ using System.Collections.Generic;
 
 namespace B_Api.Models
 {
-    public class OrderWithProducts: Order
+    public class OrderWithProducts
     {
-        public OrderWithProducts(Order order)
-        {
-            this.OrderId = order.OrderId;
-            this.CreatedAt = order.CreatedAt;
-            this.CustomerId = order.CustomerId;
-            this.PaymentTypeId = order.PaymentTypeId;
-        }
-
+        
+        public int OrderId { get; set; }
+        public int CustomerId { get; set; }
+        public int? PaymentTypeId { get; set; }
         public List<Product> Products { get; set; }  = new List<Product>();
 
         
