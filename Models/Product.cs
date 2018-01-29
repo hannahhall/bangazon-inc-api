@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace B_Api.Models
 {
@@ -40,6 +41,7 @@ namespace B_Api.Models
 
         public string Location { get; set; }
 
+        [JsonIgnore]
         public ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }
