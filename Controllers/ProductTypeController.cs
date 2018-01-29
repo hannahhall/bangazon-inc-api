@@ -127,5 +127,26 @@ namespace B_Api.Controllers
             return new StatusCodeResult(StatusCodes.Status204NoContent);
         }
 
+        // DELETE api/paymenttype/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            ProductType productType = _context.ProductType.Single(m => m.ProductTypeId == id);
+            if (productType == null)
+            {
+                return NotFound();
+            }
+
+            _context.ProductType.Remove(productType);
+            _context.SaveChanges();
+
+            return Ok(productType);
+        }
+
     }
 }
