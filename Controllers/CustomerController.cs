@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using B_Api.Data;
 using B_Api.Models;
@@ -21,7 +22,29 @@ namespace B_Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var customers = _context.Customer.ToList();
+            List<Customer> customers = new List<Customer>();
+            try 
+            {
+                bool active = bool.Parse(HttpContext.Request.Query["active"]);
+                if (active)
+                {
+                    // customers with orders
+                    customers = _context.Customer.Where(customer => 
+                        _context.Order.Any(order => order.CustomerId == customer.CustomerId)
+                    ).ToList();
+                }
+                else
+                {
+                    // customers without orders
+                    customers = _context.Customer.Where(customer =>
+                        !(_context.Order.Any(order => order.CustomerId == customer.CustomerId))
+                    ).ToList();
+                }
+            } 
+            catch(System.ArgumentNullException)
+            {
+                customers = _context.Customer.ToList();   
+            }
             if (customers == null)
             {
                 return NotFound();
