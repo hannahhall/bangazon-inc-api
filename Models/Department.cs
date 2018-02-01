@@ -9,6 +9,6 @@ namespace B_Api.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

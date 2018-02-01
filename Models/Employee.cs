@@ -18,7 +18,7 @@ namespace B_Api.Models
         
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
-        public ICollection<EmployeeComputer> EmployeeComputers { get; set; }
-        public ICollection<TrainingEmployee> TrainingEmployees { get; set; }
+        public virtual ICollection<EmployeeComputer> EmployeeComputers { get; set; }
+        public virtual ICollection<TrainingEmployee> TrainingEmployees { get; set; }
     }
 }

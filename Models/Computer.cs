@@ -17,7 +17,7 @@ namespace B_Api.Models
         public DateTime PurchaseDate { get; set; }
         public DateTime DecomissionDate { get; set; }
 
-        public ICollection<EmployeeComputer> EmployeeComputers { get; set; }
+        public virtual ICollection<EmployeeComputer> EmployeeComputers { get; set; }
 
     }
 }

@@ -12,6 +12,6 @@ namespace B_Api.Models
         [StringLength(255)]
         public string Label { get; set; }
        
-        public ICollection<Product> Products;
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

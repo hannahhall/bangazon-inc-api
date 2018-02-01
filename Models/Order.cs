@@ -13,7 +13,7 @@ namespace B_Api.Models
         [Required]
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
-        public ICollection<OrderProduct> OrderProducts { get; set; }
+        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

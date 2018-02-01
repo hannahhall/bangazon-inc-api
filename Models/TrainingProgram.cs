@@ -14,6 +14,6 @@ namespace B_Api.Models
         public DateTime StartDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
-        public ICollection<TrainingEmployee> TrainingEmployees { get; set; }
+        public virtual ICollection<TrainingEmployee> TrainingEmployees { get; set; }
     }
 }
