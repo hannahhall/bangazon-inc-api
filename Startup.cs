@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using B_Api.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,13 +29,25 @@ namespace B_Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowBangazon"));
+            });
+
             var connection = "Filename=/Users/hannahhall/workspace/cohort-22/bangazon/B_Api/api.db";
-            Console.WriteLine($"connection = {connection}");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connection));
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Bangazon API", Version = "v1" });
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowBangazon",
+                    builder => builder.WithOrigins("http://bangazon.com:8080")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
             });
         }
 
@@ -55,6 +69,8 @@ namespace B_Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bangazon API V1");
             });
+
+            app.UseCors("AllowBangazon");
         }
     }
 }
